@@ -17,7 +17,7 @@ const Principal: React.FC = () => {
     formData.append('imagenPerfil', file); // importante: debe coincidir con multer.single('imagenPerfil')
 
     try {
-    const response = await fetch('https://aging-radiation-enormous-costa.trycloudflare.com/imagen/single', {
+    const response = await fetch('https://chains-taken-microphone-shakespeare.trycloudflare.com/imagen/single', {
   method: 'POST',
   body: formData,
 });
