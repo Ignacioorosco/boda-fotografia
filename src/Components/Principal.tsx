@@ -10,46 +10,40 @@ const Principal: React.FC = () => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // Mostrar vista previa
     const imageUrl = URL.createObjectURL(file);
     setImagePreview(imageUrl);
 
-    // Crear FormData
     const formData = new FormData();
-    formData.append('imagenPerfil', file); // importante: debe coincidir con multer.single('imagenPerfil')
+    formData.append("imagenPerfil", file);
 
     try {
-    const response = await fetch(' https://charging-jacket-designers-insulation.trycloudflare.com/imagen/single', {
-  method: 'POST',
-  body: formData,
-});
+      const response = await fetch(
+        "https://charging-jacket-designers-insulation.trycloudflare.com/imagen/single",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       const result = await response.text();
       console.log(`✅ Imagen subida: ${result}`);
     } catch (error) {
-      console.error('❌ Error al subir la imagen:', error);
-      alert('Error al subir la imagen.');
+      console.error("❌ Error al subir la imagen:", error);
+      alert("Error al subir la imagen.");
     }
   };
 
   return (
-  <motion.section
-  className="relative flex flex-col min-h-screen bg-pink-50 bg-cover bg-center"
-  style={{ backgroundImage: `url(${portada})` }}
-  initial={{ opacity: 0 }}          // empieza invisible
-  animate={{ opacity: 1 }}          // aparece suavemente
-  transition={{ duration: 2 }}      // en 1s
->
-
-      {/* Sección de recuerdos */}
+    <motion.section
+      className="relative flex flex-col min-h-screen bg-pink-50 bg-cover bg-center"
+      style={{ backgroundImage: `url(${portada})` }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 2 }}
+    >
       <div className="flex-1 p-6 text-center">
         <div className="relative z-10 text-center px-4">
-          <img
-            src={logo}
-            alt="A&F logo"
-            className="mx-auto w-32 h-32 mb-6"
-          />
-
+          <img src={logo} alt="A&F logo" className="mx-auto w-32 h-32 mb-6" />
           <h2 className="text-2xl font-semibold mb-4">¡Nos Casamos!</h2>
           <h1 className="font-playwrite text-5xl mb-6">Ayelen y Franco</h1>
           <p className="text-lg tracking-wide">13 septiembre | 12:00</p>
@@ -58,7 +52,7 @@ const Principal: React.FC = () => {
           </h2>
         </div>
 
-        {/* Input de cámara */}
+        {/* Inputs ocultos */}
         <input
           type="file"
           accept="image/*"
@@ -67,17 +61,40 @@ const Principal: React.FC = () => {
           className="hidden"
           id="cameraInput"
         />
-        <label
-          htmlFor="cameraInput"
-          className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-2xl 
-             backdrop-blur-md bg-white/30 border border-white/50
-             text-pink-700 font-medium shadow-lg
-             hover:bg-white/50 hover:scale-105 transition-all cursor-pointer"
-        >
-          <span className="text-xl">📸</span>
-          <span>Abrir cámara</span>
-        </label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageCapture}
+          className="hidden"
+          id="fileInput"
+        />
 
+        {/* Botones */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
+          <label
+            htmlFor="cameraInput"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl 
+              backdrop-blur-md bg-white/30 border border-white/50
+              text-pink-700 font-medium shadow-lg
+              hover:bg-white/50 hover:scale-105 transition-all cursor-pointer"
+          >
+            <span className="text-xl">📸</span>
+            <span>Abrir cámara</span>
+          </label>
+
+          <label
+            htmlFor="fileInput"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl 
+              backdrop-blur-md bg-white/30 border border-white/50
+              text-pink-700 font-medium shadow-lg
+              hover:bg-white/50 hover:scale-105 transition-all cursor-pointer"
+          >
+            <span className="text-xl">🖼️</span>
+            <span>Subir desde galería</span>
+          </label>
+        </div>
+
+        {/* Vista previa */}
         {imagePreview && (
           <div className="mt-6">
             <h3 className="text-gray-700 font-medium mb-3">
