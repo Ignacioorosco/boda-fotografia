@@ -6,32 +6,29 @@ import logo from "../assets/ChatGPT Image 1 sept 2025, 05_56_28 p.m..png";
 const Principal: React.FC = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  const handleImageCapture = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleImageCapture = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
+    // Mostrar vista previa
     const imageUrl = URL.createObjectURL(file);
     setImagePreview(imageUrl);
 
+    // Crear FormData
     const formData = new FormData();
-    formData.append("imagenPerfil", file);
+    formData.append('imagenPerfil', file); // importante: debe coincidir con multer.single('imagenPerfil')
 
     try {
-      const response = await fetch(
-        " https://indonesia-merchandise-edge-foreign.trycloudflare.com/imagen/single",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+    const response = await fetch(' https://charging-jacket-designers-insulation.trycloudflare.com/imagen/single', {
+  method: 'POST',
+  body: formData,
+});
 
       const result = await response.text();
       console.log(`✅ Imagen subida: ${result}`);
     } catch (error) {
-      console.error("❌ Error al subir la imagen:", error);
-      alert("Error al subir la imagen.");
+      console.error('❌ Error al subir la imagen:', error);
+      alert('Error al subir la imagen.');
     }
   };
 
