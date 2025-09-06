@@ -5,6 +5,7 @@ import logo from "../assets/ChatGPT Image 1 sept 2025, 05_56_28 p.m..png";
 
 const Principal: React.FC = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [mensaje, setMensaje] = useState<string | null>(null);
 
   const handleImageCapture = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -12,6 +13,7 @@ const Principal: React.FC = () => {
 
     const imageUrl = URL.createObjectURL(file);
     setImagePreview(imageUrl);
+    setMensaje("Subiendo imagen...");
 
     const formData = new FormData();
     formData.append("imagenPerfil", file);
@@ -25,11 +27,16 @@ const Principal: React.FC = () => {
         }
       );
 
+      if (!response.ok) {
+        throw new Error(`Error en el servidor: ${response.statusText}`);
+      }
+
       const result = await response.text();
       console.log(`✅ Imagen subida: ${result}`);
-    } catch (error) {
+      setMensaje("✅ Imagen subida con éxito. ¡Gracias por compartir tu recuerdo!");
+    } catch (error: any) {
       console.error("❌ Error al subir la imagen:", error);
-      alert("Error al subir la imagen.");
+      setMensaje("❌ Hubo un error al subir la imagen. Intenta nuevamente.");
     }
   };
 
@@ -105,6 +112,23 @@ const Principal: React.FC = () => {
               alt="Preview"
               className="mx-auto max-w-xs rounded-2xl shadow-md border border-pink-200"
             />
+          </div>
+        )}
+
+        {/* Mensaje de estado */}
+        {mensaje && (
+          <div className="mt-4">
+            <p
+              className={`text-lg font-medium ${
+                mensaje.startsWith("✅")
+                  ? "text-green-600"
+                  : mensaje.startsWith("❌")
+                  ? "text-red-600"
+                  : "text-gray-600"
+              }`}
+            >
+              {mensaje}
+            </p>
           </div>
         )}
       </div>
