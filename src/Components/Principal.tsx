@@ -31,7 +31,7 @@ const Principal: React.FC = () => {
     try {
       // Enviamos al backend
       const response = await fetch(
-        "https://charging-jacket-designers-insulation.trycloudflare.com/imagen/single",
+        "https://convenient-madrid-threshold-plugins.trycloudflare.com/imagen/single",
         {
           method: "POST",
           body: formData,
