@@ -23,7 +23,7 @@ const Principal: React.FC = () => {
 
     try {
       const response = await fetch(
-        "https://convenient-madrid-threshold-plugins.trycloudflare.com/imagen/single",
+        "https://mine-samoa-gis-direction.trycloudflare.com/imagen/single",
         {
           method: "POST",
           body: formData,
