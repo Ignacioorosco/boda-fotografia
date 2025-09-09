@@ -3,3 +3,10 @@
   font-weight: 400;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Le Jour Script';
+  src: url('./assets/font/LeJourScript.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
