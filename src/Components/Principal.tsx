@@ -1,29 +1,42 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+
+// Imágenes de portada y logo
 import portada from "../assets/pexels-cottonbro-7504597.jpg";
 import logo from "../assets/ChatGPT Image 1 sept 2025, 05_56_28 p.m..png";
 
 const Principal: React.FC = () => {
+  // Estado para mostrar la vista previa de la imagen seleccionada
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  // Estado para mostrar mensajes al usuario
   const [mensaje, setMensaje] = useState<string | null>(null);
 
+  // Estado para saber si la cámara está disponible o no
+  const [camaraDisponible, setCamaraDisponible] = useState<boolean>(true);
+
+  // Función que se ejecuta cuando se selecciona o se captura una imagen
   const handleImageCapture = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+
+    // Si no se seleccionó ningún archivo, probablemente falló la cámara
     if (!file) {
-      alert("⚠️ No se pudo abrir la cámara. Intenta desde la galería.");
+      setMensaje("⚠️ No se pudo abrir la cámara en este dispositivo. Por favor, sube una imagen desde la galería.");
+      setCamaraDisponible(false); // Ocultamos el botón de cámara
       return;
     }
 
+    // Mostrar vista previa localmente
     const imageUrl = URL.createObjectURL(file);
-    console.log("esto trae imagenUrl",imageUrl);
-    
     setImagePreview(imageUrl);
     setMensaje("Subiendo imagen...");
 
+    // Crear FormData para enviar al servidor
     const formData = new FormData();
     formData.append("imagenPerfil", file);
 
     try {
+      // Enviar imagen al servidor
       const response = await fetch(
         "https://mine-samoa-gis-direction.trycloudflare.com/imagen/single",
         {
@@ -56,16 +69,15 @@ const Principal: React.FC = () => {
 
       {/* Contenido principal */}
       <div className="relative z-10 flex-1 p-6 text-center">
-        {/* Encabezado */}
-        <div className=" style={{ fontFamily: 'Le Jour Script' }} text-center px-4">
+        {/* Encabezado con logo y nombres */}
+        <div className="text-center px-4" style={{ fontFamily: 'Le Jour Script' }}>
           <img src={logo} alt="A&F logo" className="mx-auto w-32 h-32 mb-6" />
           <h2 className="text-2xl font-semibold mb-4" style={{ color: "#7B4B3A" }}>
             ¡Nos Casamos!
           </h2>
           <h1
-            className="font-playwrite text-5xl mb-6"
-            style={{ color: "#4B2E2B" ,fontFamily: 'Le Jour Script' }}
-
+            className="text-5xl mb-6"
+            style={{ color: "#4B2E2B" }}
           >
             Ayelen y Franco
           </h1>
@@ -77,7 +89,7 @@ const Principal: React.FC = () => {
           </h2>
         </div>
 
-        {/* Inputs ocultos */}
+        {/* Inputs ocultos (cámara y galería) */}
         <input
           type="file"
           accept="image/*"
@@ -94,22 +106,26 @@ const Principal: React.FC = () => {
           id="fileInput"
         />
 
-        {/* Botones */}
+        {/* Botones personalizados */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
-          <label
-            htmlFor="cameraInput"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl 
+          {/* Botón de cámara solo si está disponible */}
+          {camaraDisponible && (
+            <label
+              htmlFor="cameraInput"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl 
               shadow-lg transition-all cursor-pointer"
-            style={{
-              backgroundColor: "#D9B08C",
-              color: "#4B2E2B",
-              border: "1px solid #C89F94",
-            }}
-          >
-            <span className="text-xl">📸</span>
-            <span>Abrir cámara</span>
-          </label>
+              style={{
+                backgroundColor: "#D9B08C",
+                color: "#4B2E2B",
+                border: "1px solid #C89F94",
+              }}
+            >
+              <span className="text-xl">📸</span>
+              <span>Abrir cámara</span>
+            </label>
+          )}
 
+          {/* Botón para subir desde galería (siempre visible) */}
           <label
             htmlFor="fileInput"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl 
@@ -125,7 +141,14 @@ const Principal: React.FC = () => {
           </label>
         </div>
 
-        {/* Vista previa */}
+        {/* Aviso si la cámara no está disponible */}
+        {!camaraDisponible && (
+          <p className="mt-3 text-sm text-red-600">
+            Este dispositivo no permite abrir la cámara desde el navegador. Por favor, sube una imagen desde tu galería.
+          </p>
+        )}
+
+        {/* Vista previa de la imagen seleccionada */}
         {imagePreview && (
           <div className="mt-6">
             <h3 className="font-medium mb-3" style={{ color: "#7B4B3A" }}>
@@ -140,7 +163,7 @@ const Principal: React.FC = () => {
           </div>
         )}
 
-        {/* Mensajes dinámicos */}
+        {/* Mensajes dinámicos (subida exitosa, error, etc.) */}
         {mensaje && (
           <div className="mt-4">
             <p
