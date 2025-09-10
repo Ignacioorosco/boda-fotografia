@@ -10,11 +10,13 @@ const Principal: React.FC = () => {
   const handleImageCapture = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) {
-      setMensaje("⚠️ No se pudo abrir la cámara. Intenta desde la galería.");
+      alert("⚠️ No se pudo abrir la cámara. Intenta desde la galería.");
       return;
     }
 
     const imageUrl = URL.createObjectURL(file);
+    console.log("esto trae imagenUrl",imageUrl);
+    
     setImagePreview(imageUrl);
     setMensaje("Subiendo imagen...");
 
