@@ -131,7 +131,7 @@ const Principal: React.FC = () => {
 
 
 
-             {/* Botón de cámara solo si está disponible 
+              Botón de cámara solo si está disponible 
           {camaraDisponible && (
             <label
               htmlFor="cameraInput"
@@ -146,7 +146,7 @@ const Principal: React.FC = () => {
               <span className="text-xl">📸</span>
               <span>Abrir cámara</span>
             </label>
-          )}*/}
+          )}
         </div>
 
         {/* Aviso si la cámara no está disponible */}
