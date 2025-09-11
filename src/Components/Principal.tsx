@@ -38,7 +38,7 @@ const Principal: React.FC = () => {
     try {
       // Enviar imagen al servidor
       const response = await fetch(
-        "https://mine-samoa-gis-direction.trycloudflare.com/imagen/single",
+        "https://pdt-junior-harder-diffs.trycloudflare.com/imagen/single",
         {
           method: "POST",
           body: formData,
