@@ -48,6 +48,8 @@ const Principal: React.FC = () => {
       if (!response.ok) throw new Error(`Error en el servidor: ${response.statusText}`);
 
       const result = await response.text();
+
+      
       console.log(`✅ Imagen subida: ${result}`);
       setMensaje("✅ Imagen subida con éxito. ¡Gracias por compartir tu recuerdo!");
     } catch (error: any) {
@@ -81,10 +83,10 @@ const Principal: React.FC = () => {
           >
             Ayelen y Franco
           </h1>
-          <p className="text-lg tracking-wide" style={{ color: "#7B4B3A" }}>
+          <p className="text-lg tracking-wide" style={{ color: "#7B4B3A" , fontFamily: 'homemade-apple-regular'  }}>
             13 septiembre | 12:00
           </p>
-          <h2 className="text-2xl font-semibold mb-4" style={{ color: "#7B4B3A" }}>
+          <h2 className="text-2xl font-semibold mb-4" style={{ color: "#7B4B3A" , fontFamily: 'homemade-apple-regular' }}>
             Comparte un recuerdo con nosotros
           </h2>
         </div>
@@ -108,7 +110,28 @@ const Principal: React.FC = () => {
 
         {/* Botones personalizados */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
-          {/* Botón de cámara solo si está disponible */}
+       
+
+          {/* Botón para subir desde galería (siempre visible) */}
+          <label
+            htmlFor="fileInput"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl 
+              shadow-lg transition-all cursor-pointer"
+            style={{
+              backgroundColor: "#D9B08C",
+              color: "#4B2E2B",
+              border: "1px solid #C89F94",
+            }}
+          >
+            <span className="text-xl">🖼️</span>
+            <span>Subi tu recuerdo desde galería</span>
+          </label>
+
+
+
+
+
+             {/* Botón de cámara solo si está disponible 
           {camaraDisponible && (
             <label
               htmlFor="cameraInput"
@@ -123,22 +146,7 @@ const Principal: React.FC = () => {
               <span className="text-xl">📸</span>
               <span>Abrir cámara</span>
             </label>
-          )}
-
-          {/* Botón para subir desde galería (siempre visible) */}
-          <label
-            htmlFor="fileInput"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl 
-              shadow-lg transition-all cursor-pointer"
-            style={{
-              backgroundColor: "#D9B08C",
-              color: "#4B2E2B",
-              border: "1px solid #C89F94",
-            }}
-          >
-            <span className="text-xl">🖼️</span>
-            <span>Subir desde galería</span>
-          </label>
+          )}*/}
         </div>
 
         {/* Aviso si la cámara no está disponible */}
