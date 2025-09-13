@@ -38,7 +38,7 @@ const Principal: React.FC = () => {
     try {
       // Enviar imagen al servidor
       const response = await fetch(
-        "https://pdt-junior-harder-diffs.trycloudflare.com/imagen/single",
+        "https://modelling-ppc-albuquerque-sad.trycloudflare.com/imagen/single",
         {
           method: "POST",
           body: formData,
@@ -191,6 +191,7 @@ const Principal: React.FC = () => {
           </div>
         )}
       </div>
+      <footer>hola</footer>
     </motion.section>
   );
 };
