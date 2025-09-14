@@ -38,7 +38,7 @@ const Principal: React.FC = () => {
     try {
       // Enviar imagen al servidor
       const response = await fetch(
-        "https://modelling-ppc-albuquerque-sad.trycloudflare.com/imagen/single",
+        "https://lowest-elliott-distances-asbestos.trycloudflare.com/imagen/single",
         {
           method: "POST",
           body: formData,
